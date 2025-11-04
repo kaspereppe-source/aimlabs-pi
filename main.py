@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import socket
 
-PC_IP = "192.168.2.1"
+PC_IP = "192.168.86.99"
 PC_PORT = 5005
 VIDEO_DEVICE = "/dev/video0"
 
