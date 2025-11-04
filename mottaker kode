@@ -1,0 +1,31 @@
+import socket
+import pyautogui
+
+HOST = "0.0.0.0"   # Lytt på alle nettverksgrensesnitt
+PORT = 5000        # Må matche porten i senderkoden på Pi
+
+print(" starter mottaker, venter på PI")
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
+s.listen(1)
+
+conn, addr = s.accept()
+print(f" Tilkoblet {addr}")
+
+
+while True:
+    data = conn.recv(1024).decode()
+    if not data:
+        break
+
+    try:
+        x_str, y_str = data.strip().split(',')
+        x, y = int(x_str), int(y_str)
+        pyautogui.moveTo(x, y)
+        print(f"Flytter musen til: ({x}, {y})")
+    except Exception as e:
+        print("Feil i data:", data, e)
+
+conn.close()
+print("forbindelse brutt")
