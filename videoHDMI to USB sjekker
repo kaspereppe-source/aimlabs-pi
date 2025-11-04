@@ -1,0 +1,12 @@
+import cv2
+
+
+cap = cv2.VideoCapture("/dev/video0")
+
+if not cap.isOpened():
+  print(" feil tilkobling.")
+else:
+  print(" korrekt tilkobling")
+
+    while True:
+        ret, frame = cap.read()
