@@ -1,0 +1,18 @@
+import socket
+import time
+
+HOST = "192.168.2.1"  # Sett PC-ens IP her
+PORT = 5000
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT))
+print("Tilkoblet til PC")
+
+for i in range(5):
+    msg = f"Testmelding {i+1}"
+    s.sendall(msg.encode())
+    print(f"Sendt: {msg}")
+    time.sleep(1)
+
+s.close()
+print("Forbindelsen ble avsluttet.")
