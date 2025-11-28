@@ -1,5 +1,6 @@
 import socket
-import pyautogui
+import win32api
+import win32con
 
 UDP_IP = "0.0.0.0"
 UDP_PORT = 5005
@@ -7,16 +8,23 @@ UDP_PORT = 5005
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
 
-screen_width, screen_height = pyautogui.size()
-frame_width = 640
-frame_height = 480
+print("Venter på data fra Pi...")
 
 while True:
     data, addr = sock.recvfrom(1024)
+    msg = data.decode().strip()
+
+    if msg == "PING":
+        print("Pi → PC: OK (PING mottatt)")
+        continue
+
     try:
-        cx, cy = map(int, data.decode().split(','))
-        screen_x = int(cx * screen_width / frame_width)
-        screen_y = int(cy * screen_height / frame_height)
-        pyautogui.moveTo(screen_x, screen_y)
+        cx, cy = map(int, msg.split(','))
+        win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, cx, cy)
+        print(f"Mottatt: {cx},{cy}")
     except:
-        pass
+        print("Ugyldig datapakke")
+
+    if win32api.GetAsyncKeyState(win32con.VK_DOWN):
+        print("Avslutter")
+        break
