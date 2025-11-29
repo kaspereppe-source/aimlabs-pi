@@ -10,14 +10,14 @@ ds_prev = 0
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
 
-print("Venter på data fra Pi...")
+print("Venter")
 
 while True:
     data, addr = sock.recvfrom(1024)
     msg = data.decode().strip()
 
     if msg == "PING":
-        print("Pi → PC: OK (PING mottatt)")
+        print("(PING mottatt)")
         continue
 
     try:
