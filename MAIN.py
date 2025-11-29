@@ -43,10 +43,9 @@ while True:
         # dx/dy relativt til midten av kamera
         dx = cx - MID_X
         dy = cy - MID_Y
-
-        # Send posisjonen til PC
-        msg = f"{dx},{dy}".encode()
-        sock.sendto(msg, (PC_IP, PC_PORT))
+    else:
+        # Hvis ingen objekt funnet, sett dx/dy til 0
+        dx, dy = 0, 0
 
     # ----------------------------------------
     # SJEKK OM MIDTPUNKTET ER PÅ NOE BLÅTT
@@ -57,9 +56,15 @@ while True:
     if (lower_blue[0] <= h <= upper_blue[0] and
         lower_blue[1] <= s <= upper_blue[1] and
         lower_blue[2] <= v <= upper_blue[2]):
-        
-        # Midten treffer blått → send varsel
-        sock.sendto(b"OBJECT_FOUND", (PC_IP, PC_PORT))
-        print("Midten er på objekt → OBJECT_FOUND sendt")
+        ds = 1
     else:
-        print("Midten er IKKE på objekt")
+        ds = 0
+
+    # ----------------------
+    # SEND PAKKE TIL PC
+    # Format: dx,dy,ds
+    # ----------------------
+    msg = f"{dx},{dy},{ds}".encode()
+    sock.sendto(msg, (PC_IP, PC_PORT))
+
+    print(f"Sendt msg: {msg.decode()}")
