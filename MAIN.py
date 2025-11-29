@@ -26,9 +26,6 @@ while True:
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    # ----------------------
-    # FINN OBJEKT (som før)
-    # ----------------------
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -47,9 +44,7 @@ while True:
         # Hvis ingen objekt funnet, sett dx/dy til 0
         dx, dy = 0, 0
 
-    # ----------------------------------------
     # SJEKK OM MIDTPUNKTET ER PÅ NOE BLÅTT
-    # ----------------------------------------
     mid_pixel = hsv[MID_Y, MID_X]
     h, s, v = mid_pixel
 
@@ -60,10 +55,10 @@ while True:
     else:
         ds = 0
 
-    # ----------------------
+
     # SEND PAKKE TIL PC
     # Format: dx,dy,ds
-    # ----------------------
+
     msg = f"{dx},{dy},{ds}".encode()
     sock.sendto(msg, (PC_IP, PC_PORT))
 
