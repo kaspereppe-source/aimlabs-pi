@@ -8,10 +8,10 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 PC_IP = "192.168.0.50"
 PC_PORT = 5005
 
-print("Sender PING til PC...")
+print("venter på tilkobling")
 sock.sendto(b"PING", (PC_IP, PC_PORT))
 
-# Midtpunkt på kamera (640x480)
+# Midtpunkt på kamera (640x480/2)
 MID_X = 320
 MID_Y = 240
 
