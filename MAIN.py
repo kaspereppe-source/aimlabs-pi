@@ -15,7 +15,7 @@ sock.sendto(b"PING", (PC_IP, PC_PORT))
 MID_X = 320
 MID_Y = 240
 
-# Blåfargeområde i HSV
+# Blåfarge i HSV
 lower_blue = np.array([90, 80, 80])
 upper_blue = np.array([130, 255, 255])
 
@@ -41,10 +41,10 @@ while True:
         dx = cx - MID_X
         dy = cy - MID_Y
     else:
-        # Hvis ingen objekt funnet, sett dx/dy til 0
+        # Hvis ingen objekt funnet, sett dx/dy til 0 (hvis ikke feiler koden)
         dx, dy = 0, 0
 
-    # SJEKK OM MIDTPUNKTET ER PÅ NOE BLÅTT
+    # SJEKK OM SIKTER PÅ NOE BLÅTT
     mid_pixel = hsv[MID_Y, MID_X]
     h, s, v = mid_pixel
 
